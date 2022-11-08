@@ -1,4 +1,3 @@
-import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import {
@@ -9,9 +8,10 @@ import ReactDOM from 'react-dom';
 
 import Header, { messages as headerMessages } from '@edx/frontend-component-header';
 import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
+import { Route, Switch } from 'react-router';
+import { App } from 'components/App';
 
 import appMessages from './i18n';
-import ExamplePage from './example/ExamplePage';
 
 import './index.scss';
 
@@ -19,7 +19,9 @@ subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider>
       <Header />
-      <ExamplePage />
+      <Switch>
+        <Route path="/" exact component={App} />
+      </Switch>
       <Footer />
     </AppProvider>,
     document.getElementById('root'),
@@ -36,4 +38,5 @@ initialize({
     headerMessages,
     footerMessages,
   ],
+  requireAuthenticatedUser: true,
 });
