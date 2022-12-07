@@ -8,6 +8,20 @@ import {
   fetchCourseOutlineSuccess,
 } from 'features/course-home/data/slice';
 
+/**
+  * A thunk to make all the fetching cycle of the outline.
+  *
+  * Steps:
+  * - Dispatches the fetchCourseOutlineRequest action to change the status to loading.
+  * - Tries to fetch the outline data with getCourseOutlineData.
+  * - If succcessful it adds the outline model data to the state with addModel an then
+  *   it dispatches fetchCourseOutlineSuccess to change the status to loaded.
+  * - If an error is catched, it dispatches fetchCourseOutlineFailure to change the status to failed.
+  *
+  * @param  { string } courseId String with the id of the course to fetch.
+  *
+  * @public
+  */
 export function fetchCourseOutline(courseId) {
   return async (dispatch) => {
     dispatch(fetchCourseOutlineRequest({ courseId }));

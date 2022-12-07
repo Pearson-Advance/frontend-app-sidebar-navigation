@@ -2,6 +2,19 @@ import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { logInfo } from '@edx/frontend-platform/logging';
 
+/**
+  * A function that normalizes all blocks received from the outline API.
+  *
+  * The outline API returns all course blocks inside of a array without any distinction.
+  * This function classifies by type each block so they can later be used in the components.
+  * Returns the classified blocks.
+  *
+  * @param { string } courseId Must contain the id of the course.
+  * @param { Object } blocks Object with the key 'blocks' with value of an object which contains
+  * all course blocks objects.
+  *
+  * @public
+  */
 export function normalizeOutlineBlocks(courseId, blocks) {
   const models = {
     courses: {},
@@ -32,14 +45,7 @@ export function normalizeOutlineBlocks(courseId, blocks) {
       case 'sequential':
         models.sequences[block.id] = {
           complete: block.complete,
-          description: block.description,
-          due: block.due,
-          effortActivities: block.effort_activities,
-          effortTime: block.effort_time,
-          icon: block.icon,
           id: block.id,
-          // The presence of a URL for the sequence indicates that we want this sequence to be a clickable
-          // link in the outline (even though we ignore the given url and use an internal <Link> to ourselves).
           showLink: !!block.lms_web_url,
           title: block.display_name,
         };
@@ -76,6 +82,13 @@ export function normalizeOutlineBlocks(courseId, blocks) {
   return models;
 }
 
+/**
+  * A function that fetches the course outline of a given course and returns the normalized course blocks.
+  *
+  * @param { string } courseId Must contain the id of the course to get the outline from.
+  *
+  * @public
+  */
 export async function getCourseOutlineData(courseId) {
   const url = `${getConfig().LMS_BASE_URL}/api/course_home/outline/${courseId}`;
   const outlineData = await getAuthenticatedHttpClient().get(url);
