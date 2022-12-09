@@ -5,7 +5,7 @@ import { logInfo } from '@edx/frontend-platform/logging';
 /**
   * A function that normalizes all blocks received from the outline API.
   *
-  * The outline API returns all course blocks inside of a array without any distinction.
+  * The outline API from edx-platform returns all course blocks inside of a array without any distinction.
   * This function classifies by type each block so they can later be used in the components.
   * Returns the classified blocks.
   *
@@ -13,18 +13,57 @@ import { logInfo } from '@edx/frontend-platform/logging';
   * @param { Object } blocks Object with the key 'blocks' with value of an object which contains
   * all course blocks objects.
   *
+  * Return example:
+  * {
+  *   "course":{
+  *     "id":"course-v1:edX+DemoX+Demo_Course",
+  *     "title":"Demonstration Course",
+  *     "sectionIds":[
+  *       "block-v1:edX+DemoX+Demo_Course+type@chapter+block@d8a6192ade314473a78242dfeedfbf5b",
+  *       "block-v1:edX+DemoX+Demo_Course+type@chapter+block@interactive_demonstrations",
+  *       "block-v1:edX+DemoX+Demo_Course+type@chapter+block@graded_interactions",
+  *       "block-v1:edX+DemoX+Demo_Course+type@chapter+block@social_integration",
+  *       "block-v1:edX+DemoX+Demo_Course+type@chapter+block@1414ffd5143b4b508f739b563ab468b7"
+  *     ],
+  *     "hasScheduledContent":null
+  *   },
+  *   "sections":{
+  *       "block-v1:edX+DemoX+Demo_Course+type@chapter+block@d8a6192ade314473a78242dfeedfbf5b":{
+  *         "complete":true,
+  *         "id":"block-v1:edX+DemoX+Demo_Course+type@chapter+block@d8a6192ade314473a78242dfeedfbf5b",
+  *         "title":"Introduction",
+  *         "resumeBlock":false,
+  *         "sequenceIds":[
+  *             "block-v1:edX+DemoX+Demo_Course+type@sequential+block@edx_introduction",
+  *             "block-v1:edX+DemoX+Demo_Course+type@sequential+block@169471aa77c84dc4be5be3a1416a74c0",
+  *             "block-v1:edX+DemoX+Demo_Course+type@sequential+block@f626c58b7db744639c26deb41ded47c0"
+  *         ]
+  *       }
+  *       ...
+  *   }
+  *   "sequences":{
+  *       "block-v1:edX+DemoX+Demo_Course+type@sequential+block@edx_introduction":{
+  *         "complete":true,
+  *         "id":"block-v1:edX+DemoX+Demo_Course+type@sequential+block@edx_introduction",
+  *         "title":"Demo Course Overview",
+  *         "showLink":true,
+  *         "resumeBlock":false,
+  *       }
+  *       ...
+  *   }
+  * }
   * @public
   */
 export function normalizeOutlineBlocks(courseId, blocks) {
   const models = {
-    courses: {},
+    course: {},
     sections: {},
     sequences: {},
   };
   Object.values(blocks).forEach(block => {
     switch (block.type) {
       case 'course':
-        models.courses[block.id] = {
+        models.course = {
           id: courseId,
           title: block.display_name,
           sectionIds: block.children || [],
@@ -56,29 +95,6 @@ export function normalizeOutlineBlocks(courseId, blocks) {
     }
   });
 
-  // Next go through each list and use their child lists to decorate those children with a
-  // reference back to their parent.
-  Object.values(models.courses).forEach(course => {
-    if (Array.isArray(course.sectionIds)) {
-      course.sectionIds.forEach(sectionId => {
-        const section = models.sections[sectionId];
-        section.courseId = course.id;
-      });
-    }
-  });
-
-  Object.values(models.sections).forEach(section => {
-    if (Array.isArray(section.sequenceIds)) {
-      section.sequenceIds.forEach(sequenceId => {
-        if (sequenceId in models.sequences) {
-          models.sequences[sequenceId].sectionId = section.id;
-        } else {
-          logInfo(`Section ${section.id} has child block ${sequenceId}, but that block is not in the list of sequences.`);
-        }
-      });
-    }
-  });
-
   return models;
 }
 
@@ -91,13 +107,7 @@ export function normalizeOutlineBlocks(courseId, blocks) {
   */
 export async function getCourseOutlineData(courseId) {
   const url = `${getConfig().LMS_BASE_URL}/api/course_home/outline/${courseId}`;
-  const outlineData = await getAuthenticatedHttpClient().get(url);
+  const { data } = await getAuthenticatedHttpClient().get(url);
 
-  const {
-    data,
-  } = outlineData;
-
-  const courseBlocks = data.course_blocks ? normalizeOutlineBlocks(courseId, data.course_blocks.blocks) : {};
-
-  return courseBlocks;
+  return data.course_blocks ? normalizeOutlineBlocks(courseId, data.course_blocks.blocks) : {};
 }

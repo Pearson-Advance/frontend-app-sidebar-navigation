@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Collapsible, IconButton } from '@edx/paragon';
 import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import SequenceLink from 'features/course-home/outline/SequenceLink';
-import { useModel } from 'features/generic/model-store';
-import messages from 'features/course-home/outline/messages';
+import SequenceLink from 'features/outline/SequenceLink';
+import messages from 'features/outline/messages';
 
 function Section({
   courseId,
@@ -20,11 +20,9 @@ function Section({
     sequenceIds,
     title,
   } = section;
-
   const {
     sequences,
-  } = useModel('outline', courseId);
-
+  } = useSelector(state => state.outline.outlineData);
   const [open, setOpen] = useState(defaultOpen);
 
   useEffect(() => {
@@ -36,32 +34,30 @@ function Section({
   }, [defaultOpen]);
 
   const sectionTitle = (
-    <div className="row w-100 m-0">
-      <div className="col-auto p-0">
-        {complete ? (
-          <FontAwesomeIcon
-            icon={fasCheckCircle}
-            fixedWidth
-            className="float-left mt-1 text-success"
-            aria-hidden="true"
-            title={messages.completedSection.defaultMessage}
-          />
-        ) : (
-          <FontAwesomeIcon
-            icon={farCheckCircle}
-            fixedWidth
-            className="float-left mt-1 text-gray-400"
-            aria-hidden="true"
-            title={messages.incompleteSection.defaultMessage}
-          />
-        )}
-      </div>
-      <div className="col-10 ml-3 p-0 font-weight-bold text-dark-500">
-        <span className="align-middle">{title}</span>
-        <span className="sr-only">
-          , {complete ? messages.completedSection.defaultMessage : messages.incompleteSection.defaultMessage}
-        </span>
-      </div>
+    <div className="row w-100 m-0 align-items-center">
+      {complete ? (
+        <FontAwesomeIcon
+          icon={fasCheckCircle}
+          fixedWidth
+          className="float-left mt-1 text-success"
+          aria-hidden="true"
+          title={messages.completedSection.defaultMessage}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={farCheckCircle}
+          fixedWidth
+          className="float-left mt-1 text-gray-400"
+          aria-hidden="true"
+          title={messages.incompleteSection.defaultMessage}
+        />
+      )}
+      <p
+        className="ml-3 p-0 mb-0 font-weight-bold text-dark-500"
+        aria-label={`${title}, ${complete ? messages.completedSection.defaultMessage : messages.incompleteSection.defaultMessage}`}
+      >
+        {title}
+      </p>
     </div>
   );
 

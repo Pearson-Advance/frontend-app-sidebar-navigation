@@ -10,6 +10,7 @@ const slice = createSlice({
   initialState: {
     courseStatus: 'loading',
     courseId: null,
+    outlineData: {},
   },
   reducers: {
     fetchCourseOutlineFailure: (state, { payload }) => {
@@ -23,6 +24,7 @@ const slice = createSlice({
     fetchCourseOutlineSuccess: (state, { payload }) => {
       state.courseId = payload.courseId;
       state.courseStatus = LOADED;
+      state.outlineData = payload.courseOutlineResult;
     },
   },
 });

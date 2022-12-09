@@ -40,6 +40,14 @@ const messages = defineMessages({
     id: 'learning.outline.openSection',
     defaultMessage: 'Open',
   },
+  loading: {
+    id: 'sidebarNav.loading',
+    defaultMessage: 'Loading',
+  },
+  failed: {
+    id: 'sidebarNav.failed',
+    defaultMessage: 'There was an error trying to load this course.',
+  },
 });
 
 export default messages;

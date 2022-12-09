@@ -12,4 +12,9 @@
   main {
     flex-grow: 1;
   }
+
+  aside,
+  nav {
+    box-sizing: border-box;
+  }
 }

@@ -1,6 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import {
   APP_INIT_ERROR, APP_READY, subscribe, initialize,
 } from '@edx/frontend-platform';
@@ -9,9 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Switch } from 'react-router-dom';
 
-import CourseOutline from 'features/course-home/outline/CourseOutline';
+import CourseOutline from 'features/outline/CourseOutline';
 
-import appMessages from './i18n';
 import './index.scss';
 import initializeStore from './store';
 
@@ -19,7 +15,7 @@ subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Switch>
-        <PageRoute path="/course/:courseId/home">
+        <PageRoute path="/:courseId">
           <CourseOutline />
         </PageRoute>
       </Switch>
@@ -33,8 +29,6 @@ subscribe(APP_INIT_ERROR, (error) => {
 });
 
 initialize({
-  messages: [
-    appMessages,
-  ],
+  messages: [],
   requireAuthenticatedUser: true,
 });
