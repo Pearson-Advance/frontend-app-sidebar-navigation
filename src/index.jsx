@@ -1,28 +1,24 @@
-import 'regenerator-runtime/runtime';
-
 import {
   APP_INIT_ERROR, APP_READY, subscribe, initialize,
 } from '@edx/frontend-platform';
-import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
+import { AppProvider, ErrorPage, PageRoute } from '@edx/frontend-platform/react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import { Switch } from 'react-router-dom';
 
-import Header, { messages as headerMessages } from '@edx/frontend-component-header';
-import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
-import { Route, Switch } from 'react-router';
-import { App } from 'components/App';
-
-import appMessages from './i18n';
+import CourseOutline from 'features/outline/CourseOutline';
 
 import './index.scss';
+import initializeStore from './store';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <AppProvider>
-      <Header />
+    <AppProvider store={initializeStore()}>
       <Switch>
-        <Route path="/" exact component={App} />
+        <PageRoute path="/:courseId">
+          <CourseOutline />
+        </PageRoute>
       </Switch>
-      <Footer />
     </AppProvider>,
     document.getElementById('root'),
   );
@@ -33,10 +29,6 @@ subscribe(APP_INIT_ERROR, (error) => {
 });
 
 initialize({
-  messages: [
-    appMessages,
-    headerMessages,
-    footerMessages,
-  ],
+  messages: [],
   requireAuthenticatedUser: true,
 });
