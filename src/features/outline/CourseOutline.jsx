@@ -7,6 +7,7 @@ import { fetchCourseOutline } from 'features/outline/data';
 import messages from 'features/outline/messages';
 import Section from 'features/outline/Section';
 import { FAILED, LOADING } from 'features/outline/data/slice';
+import { handleOutlineEvent } from 'features/outline/eventsHandler';
 
 function CourseOutline() {
   const { courseId: courseIdFromUrl } = useParams();
@@ -25,6 +26,12 @@ function CourseOutline() {
     sections,
   } = useSelector(state => state.outline.outlineData);
   const [expandAll, setExpandAll] = useState(false);
+
+  // If an event occurs in frontend-app-learning setExpandAll will be set as true.
+  useEffect(() => {
+    handleOutlineEvent(setExpandAll);
+  }, [setExpandAll]);
+
   if (courseStatus === LOADING) {
     return (
       <h3>{messages.loading.defaultMessage}</h3>
