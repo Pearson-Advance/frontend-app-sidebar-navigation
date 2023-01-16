@@ -2,8 +2,8 @@ import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { logInfo } from '@edx/frontend-platform/logging';
 
-// eslint-disable-next-line import/no-self-import
-import * as apiModule from './api';
+// eslint-disable-next-line import/no-self-import, import/no-cycle
+import { normalizeOutlineBlocks as exportedNormalizeOutlineBlocks } from 'features/outline/data/api';
 
 /**
   * A function that normalizes all blocks received from the outline API.
@@ -112,5 +112,5 @@ export async function getCourseOutlineData(courseId) {
   const url = `${getConfig().LMS_BASE_URL}/api/course_home/outline/${courseId}`;
   const { data } = await getAuthenticatedHttpClient().get(url) || {};
 
-  return apiModule.normalizeOutlineBlocks(courseId, data?.course_blocks?.blocks || {});
+  return exportedNormalizeOutlineBlocks(courseId, data?.course_blocks?.blocks || {});
 }

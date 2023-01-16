@@ -22,6 +22,7 @@ describe('Section', () => {
   const courseId = 'course-v1:edX+DemoX+Demo_Course';
   const outlineDataUrl = `${getConfig().LMS_BASE_URL}/api/course_home/outline/${courseId}`;
   const outlineData = Factory.build('outlineTabData');
+  let section;
 
   async function fetchAndRender(sectionProps) {
     component = (
@@ -42,14 +43,7 @@ describe('Section', () => {
       expand: false,
       section: {},
     };
-    store = initializeStore();
-    axiosMock = new MockAdapter(getAuthenticatedHttpClient());
-    axiosMock.onGet(outlineDataUrl)
-      .reply(200, outlineData);
-  });
-
-  test('show checked icon when complete', async () => {
-    const section = {
+    section = {
       complete: true,
       id: 'block-v1:edX+DemoX+Demo_Course+type@chapter+block@d8a6192ade314473a78242dfeedfbf5b',
       title: 'Introduction',
@@ -58,6 +52,13 @@ describe('Section', () => {
         'block-v1:edX+DemoX+Demo_Course+type@sequential+block@bcdabcdabcdabcdabcdabcdabcdabcd1',
       ],
     };
+    store = initializeStore();
+    axiosMock = new MockAdapter(getAuthenticatedHttpClient());
+    axiosMock.onGet(outlineDataUrl)
+      .reply(200, outlineData);
+  });
+
+  test('show checked icon when complete', async () => {
     await fetchAndRender({
       ...defaultSectionProps,
       section,
@@ -71,18 +72,12 @@ describe('Section', () => {
   });
 
   test('show unchecked icon when incomplete', async () => {
-    const section = {
-      complete: false,
-      id: 'block-v1:edX+DemoX+Demo_Course+type@chapter+block@d8a6192ade314473a78242dfeedfbf5b',
-      title: 'Introduction',
-      resumeBlock: false,
-      sequenceIds: [
-        'block-v1:edX+DemoX+Demo_Course+type@sequential+block@bcdabcdabcdabcdabcdabcdabcdabcd1',
-      ],
-    };
     await fetchAndRender({
       ...defaultSectionProps,
-      section,
+      section: {
+        ...section,
+        complete: false,
+      },
     });
 
     const checkedButton = document.querySelector('.float-left.mt-1.text-success');
@@ -93,15 +88,6 @@ describe('Section', () => {
   });
 
   test('is expanded when defaultOpen is true', async () => {
-    const section = {
-      complete: false,
-      id: 'block-v1:edX+DemoX+Demo_Course+type@chapter+block@d8a6192ade314473a78242dfeedfbf5b',
-      title: 'Introduction',
-      resumeBlock: false,
-      sequenceIds: [
-        'block-v1:edX+DemoX+Demo_Course+type@sequential+block@bcdabcdabcdabcdabcdabcdabcdabcd1',
-      ],
-    };
     await fetchAndRender({
       ...defaultSectionProps,
       section,
@@ -114,15 +100,6 @@ describe('Section', () => {
   });
 
   test('is closed when defaultOpen is false', async () => {
-    const section = {
-      complete: false,
-      id: 'block-v1:edX+DemoX+Demo_Course+type@chapter+block@d8a6192ade314473a78242dfeedfbf5b',
-      title: 'Introduction',
-      resumeBlock: false,
-      sequenceIds: [
-        'block-v1:edX+DemoX+Demo_Course+type@sequential+block@bcdabcdabcdabcdabcdabcdabcdabcd1',
-      ],
-    };
     await fetchAndRender({
       ...defaultSectionProps,
       section,

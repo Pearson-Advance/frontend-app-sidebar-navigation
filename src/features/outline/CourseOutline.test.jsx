@@ -48,7 +48,7 @@ describe('CourseOutline', () => {
       await fetchAndRender();
     });
 
-    test('test expandAll button expands sections', async () => {
+    test('test expandAll button expands sections and collapseAll button is shown', async () => {
       const button = screen.getByText(messages.expandAll.defaultMessage);
 
       fireEvent.click(button);
@@ -62,7 +62,7 @@ describe('CourseOutline', () => {
       expect(document.body).toContainElement(asideSidebar);
     });
 
-    test('sections map the corect number of sections', async () => {
+    test('section map the correct number of sections', async () => {
       const sectionList = document.querySelectorAll('li.section-wrapper');
 
       expect(sectionList).toHaveLength(1);
