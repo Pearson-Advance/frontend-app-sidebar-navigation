@@ -3,33 +3,19 @@ import PropTypes from 'prop-types';
 import { faCheckCircle as fasCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getConfig } from '@edx/frontend-platform';
-
+import { Button } from '@edx/paragon';
 import messages from 'features/outline/messages';
+import { postEventOutlineToParent } from 'features/outline/eventsHandler';
 
 function SequenceLink({
   id,
-  courseId,
   first,
   sequence,
 }) {
   const {
     complete,
-    showLink,
     title,
   } = sequence;
-  const coursewareUrl = (
-    <a
-      href={`${getConfig().LEARNING_BASE_URL}course/${courseId}/${id}`}
-      target="_blank"
-      rel="noreferrer"
-      className="p-0 ml-3 text-break"
-      aria-label={`${title}, ${complete ? messages.completedAssignment.defaultMessage : messages.incompleteAssignment.defaultMessage}`}
-    >
-      {title}
-    </a>
-  );
-  const displayTitle = showLink ? coursewareUrl : title;
 
   return (
     <li className={`w-100 m-0 pl-3 d-flex align-items-center ${!first && 'mt-2 pt-2 border-top border-light'}`}>
@@ -50,14 +36,18 @@ function SequenceLink({
           title={messages.incompleteAssignment.defaultMessage}
         />
       )}
-      {displayTitle}
+      <Button.Deprecated
+        className="btn-link"
+        onClick={() => { postEventOutlineToParent('outline_sidebar_navigation_started', id); }}
+      >
+        {title}
+      </Button.Deprecated>
     </li>
   );
 }
 
 SequenceLink.propTypes = {
   id: PropTypes.string.isRequired,
-  courseId: PropTypes.string.isRequired,
   first: PropTypes.bool.isRequired,
   sequence: PropTypes.shape().isRequired,
 };
