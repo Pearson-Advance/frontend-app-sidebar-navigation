@@ -47,7 +47,11 @@ function CourseOutline() {
   return (
     <aside className="sidebar">
       <nav className="p-3" aria-label="Sidebar Navigation">
-        <Button variant="outline-primary w-100 mb-3" onClick={() => { setExpandAll(!expandAll); }}>
+        <Button
+          id="expandButton"
+          variant="outline-primary w-100 mb-3"
+          onClick={() => { setExpandAll(!expandAll); }}
+        >
           {expandAll ? messages.collapseAll.defaultMessage : messages.expandAll.defaultMessage}
         </Button>
         <ol id="sidebar-outline" className="list-unstyled">
