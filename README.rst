@@ -48,3 +48,8 @@ Build Process Notes
 **Production Build**
 
 The production build is created with ``npm run build``.
+
+Contributing
+------------
+
+If you are willing to contribute or want to know how to do so, please see our `CONTRIBUTING <https://github.com/Pearson-Advance/frontend-app-sidebar-navigation/blob/master/CONTRIBUTING.md>`_ guide.
