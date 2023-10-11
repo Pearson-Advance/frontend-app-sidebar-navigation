@@ -4,7 +4,7 @@ import {
 import { Provider } from 'react-redux';
 import initializeStore from 'store';
 
-import SequenceLink from 'features/outline/SequenceLink';
+import SequenceLink from '../../features/outline/SequenceLink';
 
 describe('Section', () => {
   let store;

@@ -3,7 +3,7 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { logInfo } from '@edx/frontend-platform/logging';
 
 // eslint-disable-next-line import/no-self-import, import/no-cycle
-import { normalizeOutlineBlocks as exportedNormalizeOutlineBlocks } from 'features/outline/data/api';
+import { normalizeOutlineBlocks as exportedNormalizeOutlineBlocks } from '../../../features/outline/data/api';
 
 /**
   * A function that normalizes all blocks received from the outline API.

@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Button } from '@edx/paragon';
 
-import { fetchCourseOutline } from 'features/outline/data';
-import messages from 'features/outline/messages';
-import Section from 'features/outline/Section';
-import { FAILED, LOADING } from 'features/outline/data/slice';
-import { handleOutlineEvent } from 'features/outline/eventsHandler';
+import { fetchCourseOutline } from '../../features/outline/data';
+import messages from '../../features/outline/messages';
+import Section from '../../features/outline/Section';
+import { FAILED, LOADING } from '../../features/outline/data/slice';
+import { handleOutlineEvent } from '../../features/outline/eventsHandler';
 
 function CourseOutline() {
   const { courseId: courseIdFromUrl } = useParams();
