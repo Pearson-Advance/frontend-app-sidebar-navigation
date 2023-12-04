@@ -18,7 +18,12 @@ function SequenceLink({
   } = sequence;
 
   return (
-    <li className={`w-100 m-0 pl-3 d-flex align-items-center ${!first && 'mt-2 pt-2 border-top border-light'}`}>
+    <li
+      className={
+        `sidebar-sequence w-100 m-0 pl-3 d-flex align-items-center
+        ${!first && ' mt-2 pt-2 border-top border-light'}`
+      }
+    >
       {complete ? (
         <FontAwesomeIcon
           icon={fasCheckCircle}
