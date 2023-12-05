@@ -4,8 +4,8 @@ import { faCheckCircle as fasCheckCircle } from '@fortawesome/free-solid-svg-ico
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@edx/paragon';
-import messages from 'features/outline/messages';
-import { postEventOutlineToParent } from 'features/outline/eventsHandler';
+import messages from '../../features/outline/messages';
+import { postEventOutlineToParent } from '../../features/outline/eventsHandler';
 
 function SequenceLink({
   id,

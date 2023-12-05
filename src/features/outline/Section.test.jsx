@@ -8,8 +8,8 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { Factory } from 'rosie';
 import { getConfig, initializeMockApp } from '@edx/frontend-platform';
 
-import Section from 'features/outline/Section';
-import { fetchCourseOutline } from 'features/outline/data';
+import Section from '../../features/outline/Section';
+import { fetchCourseOutline } from '../../features/outline/data';
 import { executeThunk } from 'testUtils';
 
 initializeMockApp();

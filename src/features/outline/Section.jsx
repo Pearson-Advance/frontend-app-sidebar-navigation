@@ -5,10 +5,10 @@ import { Collapsible, IconButton } from '@edx/paragon';
 import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { handleOutlineEvent } from 'features/outline/eventsHandler';
+import { handleOutlineEvent } from '../../features/outline/eventsHandler';
 
-import SequenceLink from 'features/outline/SequenceLink';
-import messages from 'features/outline/messages';
+import SequenceLink from '../../features/outline/SequenceLink';
+import messages from '../../features/outline/messages';
 
 function Section({
   courseId,
