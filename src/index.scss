@@ -9,12 +9,21 @@
   flex-direction: column;
   min-height: 100vh;
 
-  main {
-    flex-grow: 1;
-  }
-
-  aside,
-  nav {
+  aside.sidebar-outline-wrapper nav.sidebar-outline {
     box-sizing: border-box;
+
+    ol.sidebar-section-wrapper {
+      li.sidebar-section {
+        .collapsible-card-lg .collapsible-trigger > div {
+          flex-flow: row;
+        }
+
+        ol.sidebar-sequence-wrapper {
+          li.sidebar-sequence button.btn-link {
+            text-align: left;
+          }
+        }
+      }
+    }
   }
 }

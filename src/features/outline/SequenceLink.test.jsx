@@ -74,9 +74,9 @@ describe('Section', () => {
       sequence,
     });
 
-    const sequenceWrapper = document.querySelector('li.w-100.m-0.pl-3.d-flex.align-items-center');
+    const sidebarSequence = document.querySelector('.sidebar-sequence');
 
-    expect(sequenceWrapper).not.toHaveClass('mt-2 pt-2 border-top border-light');
+    expect(sidebarSequence).not.toHaveClass('mt-2 pt-2 border-top border-light');
   });
 
   test('sequence is styled correctly when is not first', () => {
@@ -90,8 +90,8 @@ describe('Section', () => {
       first: false,
     });
 
-    const sequenceWrapper = document.querySelector('li.w-100.m-0.pl-3.d-flex.align-items-center');
+    const sidebarSequence = document.querySelector('.sidebar-sequence');
 
-    expect(sequenceWrapper).toHaveClass('mt-2 pt-2 border-top border-light');
+    expect(sidebarSequence).toHaveClass('mt-2 pt-2 border-top border-light');
   });
 });

@@ -94,7 +94,7 @@ describe('Section', () => {
       defaultOpen: true,
     });
 
-    const subsectionList = document.querySelector('.section-wrapper div:first-child');
+    const subsectionList = document.querySelector('.sidebar-section div:first-child');
 
     expect(subsectionList).toHaveAttribute('open');
   });
@@ -106,7 +106,7 @@ describe('Section', () => {
       defaultOpen: false,
     });
 
-    const subsectionList = document.querySelector('.section-wrapper div:first-child');
+    const subsectionList = document.querySelector('.sidebar-section div:first-child');
 
     expect(subsectionList).not.toHaveAttribute('open');
   });

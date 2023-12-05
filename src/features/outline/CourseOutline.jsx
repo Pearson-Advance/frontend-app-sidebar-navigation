@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { Button } from '@edx/paragon';
+import { Button, Spinner } from '@edx/paragon';
 
 import { fetchCourseOutline } from 'features/outline/data';
 import messages from 'features/outline/messages';
@@ -34,19 +34,21 @@ function CourseOutline() {
 
   if (courseStatus === LOADING) {
     return (
-      <h3>{messages.loading.defaultMessage}</h3>
+      <div className="w-100 d-flex justify-content-center h-100 mt-3" data-testid="spinner-wrapper">
+        <Spinner animation="border" variant="primary" screenReaderText={messages.loading.defaultMessage} />
+      </div>
     );
   }
 
   if (courseStatus === FAILED) {
     return (
-      <h3>{messages.failed.defaultMessage}</h3>
+      <p className="text-danger m-3 text-center">{messages.failed.defaultMessage}</p>
     );
   }
 
   return (
-    <aside className="sidebar">
-      <nav className="p-3" aria-label="Sidebar Navigation">
+    <aside className="sidebar-outline-wrapper">
+      <nav className="sidebar-outline p-3" aria-label="Sidebar Navigation">
         <Button
           id="expandButton"
           variant="outline-primary w-100 mb-3"
@@ -54,7 +56,7 @@ function CourseOutline() {
         >
           {expandAll ? messages.collapseAll.defaultMessage : messages.expandAll.defaultMessage}
         </Button>
-        <ol id="sidebar-outline" className="list-unstyled">
+        <ol className="sidebar-section-wrapper list-unstyled">
           {course.sectionIds.map((sectionId) => (
             <Section
               key={sectionId}

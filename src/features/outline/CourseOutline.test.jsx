@@ -57,22 +57,22 @@ describe('CourseOutline', () => {
     });
 
     test('content is rendered correctly when courseStatus is loaded', async () => {
-      const asideSidebar = document.querySelector('aside.sidebar');
+      const asideSidebar = document.querySelector('.sidebar-section-wrapper');
 
       expect(document.body).toContainElement(asideSidebar);
     });
 
     test('section map the correct number of sections', async () => {
-      const sectionList = document.querySelectorAll('li.section-wrapper');
+      const sectionList = document.querySelectorAll('li.sidebar-section');
 
       expect(sectionList).toHaveLength(1);
     });
   });
 
   test('when courseStatus is loading', () => {
-    render(component);
+    const { getByTestId } = render(component);
 
-    expect(document.body).toHaveTextContent(messages.loading.defaultMessage);
+    expect(document.body).toContainElement(getByTestId('spinner-wrapper'));
   });
 
   test('when courseStatus is failed', async () => {
