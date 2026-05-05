@@ -1,3 +1,11 @@
+# 🚨 IMPORTANT NOTE 🚨
+
+This repository has been deprecated following [PADV-3013](https://pearson.atlassian.net/browse/PADV-2700).
+
+It is no longer used in any way in our installation and is maintained solely for reference purposes.
+No active development or initiatives depend on this repository.
+No new development or maintenance efforts should be made on this repository unless it is reincorporated following the requirements of the team and Cybersec at Pearson.
+
 frontend-app-sidebar-navigation
 ===============================
 
