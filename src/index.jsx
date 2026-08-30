@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Switch } from 'react-router-dom';
 
-import CourseOutline from 'features/outline/CourseOutline';
+import CourseOutline from './features/outline/CourseOutline';
 
 import './index.scss';
 import initializeStore from './store';

@@ -9,10 +9,10 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { Factory } from 'rosie';
 import { getConfig, initializeMockApp } from '@edx/frontend-platform';
 
-import CourseOutline from 'features/outline/CourseOutline';
-import { fetchCourseOutline } from 'features/outline/data';
+import CourseOutline from '../../features/outline/CourseOutline';
+import { fetchCourseOutline } from '../../features/outline/data';
 import { executeThunk } from 'testUtils';
-import messages from 'features/outline/messages';
+import messages from '../../features/outline/messages';
 
 initializeMockApp();
 jest.mock('react-router');
